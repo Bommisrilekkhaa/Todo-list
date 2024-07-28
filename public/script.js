@@ -2,7 +2,7 @@ const form = document.getElementById('task-form');
 const taskList = document.getElementById('task-list');
 
 async function fetchTasks() {
-    const response = await fetch('/tasks');
+    const response = await fetch('http://localhost:3000/tasks');
     const tasks = await response.json();
     taskList.innerHTML = '';
     tasks.forEach(task => {
@@ -21,7 +21,7 @@ form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
-    const response = await fetch('/tasks', {
+    const response = await fetch('http://localhost:3000/tasks', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title, description, completed: false })
@@ -39,7 +39,7 @@ form.addEventListener('submit', async (e) => {
 });
 
 window.toggleComplete = async function(id, completed) {
-    const response = await fetch(`/tasks/${id}`, {
+    const response = await fetch(`http://localhost:3000/tasks/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ completed: !completed })
@@ -59,7 +59,7 @@ window.toggleComplete = async function(id, completed) {
 };
 
 window.deleteTask = async function(id) {
-    await fetch(`/tasks/${id}`, { method: 'DELETE' });
+    await fetch(`http://localhost:3000/tasks/${id}`, { method: 'DELETE' });
     const taskElement = document.querySelector(`.task button[onclick="deleteTask('${id}')"]`).parentElement;
     taskElement.remove();
 };
